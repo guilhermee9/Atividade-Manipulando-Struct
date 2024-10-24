@@ -5,8 +5,6 @@ Data: 23/10/2024
 */
 
 
-
-
 #include <iostream>
 #include <string>
 #include <algorithm>  // Para usar a função sort()
@@ -171,6 +169,68 @@ void ordenarArray(Pessoa array[], int tamanho) {
     esperarEnter();  // Espera o usuário pressionar Enter
 }
 
+void ordenarPorNome(Pessoa array[], int tamanho) {
+    sort(array, array + tamanho, [](Pessoa a, Pessoa b) {
+        return a.nome < b.nome;  // compara nomes em ordem alfabética
+    });
+
+    cout << "Array organizada por nome.\n";
+
+    mostrarArray(array, tamanho);
+}
+
+// exibir maior e menor altura
+void exibirMaiorMenorAltura(Pessoa array[], int tamanho) {
+    if (tamanho == 0) {
+        cout << "O array está vazio." << endl;
+        return;
+    }
+    Pessoa pessoaMaiorAltura = array[0];//define variavel para 0
+    Pessoa pessoaMenorAltura = array[0];
+    // percorre toda array para fazer a comparacao
+    for (int i = 1; i < tamanho; i++) {
+        if(array[i].altura > pessoaMaiorAltura.altura) {
+            pessoaMaiorAltura = array[i];
+        }
+        if (array[i].altura < pessoaMenorAltura.altura){
+            pessoaMenorAltura = array[i];
+        }
+    }
+    cout << "\nMaior altura:\n"<<"Código: "<< pessoaMaiorAltura.codigo <<", Nome: "<< pessoaMaiorAltura.nome << ", Altura: " << pessoaMaiorAltura.altura << "m" << endl;
+
+    cout <<"\nMenor altura:\n"<<"Código: "<< pessoaMenorAltura.codigo <<", Nome: "<< pessoaMenorAltura.nome <<", Altura: "<< pessoaMenorAltura.altura << "m" << endl;
+    esperarEnter();  
+}
+
+void contarAlturaSuperior(Pessoa array[], int tamanho) {
+    float alturaReferencia = lerAlturaValida("Digite a altura (em metros):");
+    int contador = 0;
+    
+    for (int i = 0; i < tamanho; i++) {
+        if (array[i].altura > alturaReferencia) {
+            contador++;
+        }
+    }
+
+    cout << "Quantidade de pessoas com altura superior a " << alturaReferencia << "m: " << contador << endl;
+
+    esperarEnter();  
+}
+
+void somarAlturas(Pessoa array[], int tamanho) {
+    float somaAlturas = 0.0;
+
+    for (int i = 0; i < tamanho; i++) {
+        somaAlturas += array[i].altura;
+    }
+
+    cout << "A soma das alturas de todas as pessoas é: " << somaAlturas << "m" << endl;
+
+    esperarEnter(); 
+}
+
+
+
 // Função que exibe o menu e retorna a escolha do usuário
 int menu() {
     cout << "\nEscolha uma opção:\n";
@@ -180,12 +240,16 @@ int menu() {
     cout << "4 - Editar pessoa no array\n";
     cout << "5 - Verificar pessoa no array\n";
     cout << "6 - Ordenar array de pessoas por código\n";
+    cout << "7 - Ordenar array de pessoas por nome\n";
+    cout << "8 - Exibir pessoa com a maior e menor altura\n";
+    cout << "9 - Contar pessoas com altura superior a um valor fornecido\n";
+    cout << "10 - Somar altura de todas as pessoas\n";
     cout << "0 - Sair\n";
     return lerCodigoValido("Opção: ");
 }
 
 int main() {
-    const int TAMANHO = 5;  // Define o tamanho do array de pessoas
+    const int TAMANHO = 3;  // Define o tamanho do array de pessoas
     Pessoa array[TAMANHO];  // Declara o array para armazenar 5 registros de pessoas
 
     int opcao;
@@ -212,6 +276,18 @@ int main() {
             case 6:
                 ordenarArray(array, TAMANHO);
                 break;
+            case 7:
+                ordenarPorNome(array, TAMANHO);
+                break;
+            case 8:
+                exibirMaiorMenorAltura(array, TAMANHO);
+                break;
+            case 9:
+                contarAlturaSuperior(array, TAMANHO);
+            break;
+            case 10:
+                somarAlturas(array, TAMANHO);
+            break;
             case 0:
                 cout << "Saindo do programa..." << endl;
                 break;
